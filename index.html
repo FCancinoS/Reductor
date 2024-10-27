@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimización de Imágenes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.0.6/compressor.min.js"></script>
+</head>
+<body>
+    <h1>Optimización de Imágenes</h1>
+    <input type="file" id="upload" accept="image/*">
+    <canvas id="canvas" style="display:none;"></canvas>
+    <h2>Imagen Optimizada</h2>
+    <img id="output" alt="Imagen Optimizada">
+
+    <script>
+        document.getElementById('upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                new Compressor(file, {
+                    quality: 0.8, // Cambia este valor para ajustar la calidad
+                    success(result) {
+                        const url = URL.createObjectURL(result);
+                        const outputImg = document.getElementById('output');
+                        outputImg.src = url;
+                    },
+                    error(err) {
+                        console.error(err.message);
+                    },
+                });
+            }
+        });
+    </script>
+</body>
+</html>
